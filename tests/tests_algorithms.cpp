@@ -2,8 +2,51 @@
 #include "../lib_algorithms/algorithms.h"
 
 
-TEST(Brackets, empty) { EXPECT_TRUE(check_breckets("")); }
-TEST(Brackets, with_spaces) { EXPECT_TRUE(check_breckets(" ( ) [ ] { } ")); }
-TEST(Brackets, tabs_and_newlines) { EXPECT_TRUE(check_breckets("\n[\n]")); }
-TEST(Brackets, letters_still_error) { EXPECT_FALSE(check_breckets("(a)")); }
-TEST(Brackets, numbers_still_error) { EXPECT_FALSE(check_breckets("(1)")); }
+TEST(CheckBracketsTest, empty_string) {
+    EXPECT_TRUE(check_breckets(""));
+}
+
+TEST(CheckBracketsTest, simple_correct_pairs) {
+    EXPECT_TRUE(check_breckets("()"));
+    EXPECT_TRUE(check_breckets("[]"));
+    EXPECT_TRUE(check_breckets("{}"));
+}
+
+TEST(CheckBracketsTest, nested_correct) {
+    EXPECT_TRUE(check_breckets("({[]})"));
+    EXPECT_TRUE(check_breckets("()[]{}"));
+    EXPECT_TRUE(check_breckets("{[()]}"));
+}
+
+TEST(CheckBracketsTest, unmatched_opening) {
+    EXPECT_FALSE(check_breckets("("));
+    EXPECT_FALSE(check_breckets("["));
+    EXPECT_FALSE(check_breckets("{"));
+    EXPECT_FALSE(check_breckets("({"));
+}
+
+TEST(CheckBracketsTest, unmatched_closing) {
+    EXPECT_FALSE(check_breckets(")"));
+    EXPECT_FALSE(check_breckets("]"));
+    EXPECT_FALSE(check_breckets("}"));
+    EXPECT_FALSE(check_breckets("())"));
+}
+
+TEST(CheckBracketsTest, wrong_order) {
+    EXPECT_FALSE(check_breckets("([)]"));
+    EXPECT_FALSE(check_breckets("{(})"));
+    EXPECT_FALSE(check_breckets("]["));
+}
+
+TEST(CheckBracketsTest, wrong_pairs) {
+    EXPECT_FALSE(check_breckets("(]"));
+    EXPECT_FALSE(check_breckets("{)"));
+    EXPECT_FALSE(check_breckets("[}"));
+}
+
+TEST(CheckBracketsTest, invalid_characters) {
+    EXPECT_FALSE(check_breckets("a"));
+    EXPECT_FALSE(check_breckets("(a)"));
+    EXPECT_FALSE(check_breckets("1"));
+    EXPECT_FALSE(check_breckets("()a"));
+}

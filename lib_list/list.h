@@ -1,5 +1,5 @@
-#ifndef QUEUE
-#define QUEUE
+#ifndef LIST
+#define LIST
 
 template <class T>
 struct Node {
@@ -33,8 +33,60 @@ public:
     T& back();
     int size() const;
     void clear();
-    Node<T>* begin();
-    Node<T>* end();
+    //Node<T>* begin();
+    //Node<T>* end();
+
+
+
+    class Iterator {
+        Node<T>* current;
+    public:
+        Iterator(): current(nullptr){}
+        Iterator(Node<T>* pos) : current(pos) {}
+        Iterator(const Iterator& other) : current(other.current) {}
+
+        Iterator& operator=(const Iterator& other) {
+            if (this != &other) {
+                current = other.current;
+            }
+            return *this;
+        }
+
+        T& operator*() {
+            if (current == nullptr) {
+                throw std::runtime_error("Null iterator");
+            }
+            return current->value;
+        }
+
+        bool operator==(const Iterator& other) const {
+            return current == other.current;
+        }
+
+        bool operator!=(const Iterator& other) const {
+            return current != other.current;
+        }
+
+        Iterator operator++(int) {
+            Iterator tmp(*this);
+            current = current->next;
+            return tmp;
+        }
+
+        Iterator& operator++() {
+            current = current->next;
+            return *this;
+        }
+    };
+
+    Iterator begin() {
+        return Iterator(_head);
+    }
+
+    Iterator end() {
+        return Iterator();
+    }
+    typedef Iterator iterator;
 };
 template <class T>
 Node<T>::Node(T val, Node<T>* next) : value(val), next(next) {}
@@ -258,14 +310,14 @@ void List<T>::clear() {
     _count = 0;
 }
 
-template <class T>
-Node<T>* List<T>::begin() {
-    return _head;
-}
-
-template <class T>
-Node<T>* List<T>::end() {
-    return nullptr;
-}
+//template <class T>
+//Node<T>* List<T>::begin() {
+//    return _head;
+//}
+//
+//template <class T>
+//Node<T>* List<T>::end() {
+//    return nullptr;
+//}
 
 #endif

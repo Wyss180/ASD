@@ -205,20 +205,20 @@ TEST(ListTest, assignment_operator) {
     EXPECT_EQ(list2.back(), 2);
 }
 
-TEST(ListTest, iteration_with_begin_end) {
-    List<int> list;
-    list.push_back(1);
-    list.push_back(2);
-    list.push_back(3);
-
-    std::vector<int> result;
-    for (Node<int>* current = list.begin(); current != list.end(); current = current->next) {
-        result.push_back(current->value);
-    }
-
-    std::vector<int> expected = { 1, 2, 3 };
-    EXPECT_EQ(result, expected);
-}
+//TEST(ListTest, iteration_with_begin_end) {
+//    List<int> list;
+//    list.push_back(1);
+//    list.push_back(2);
+//    list.push_back(3);
+//
+//    std::vector<int> result;
+//    for (Node<int>* current = list.begin(); current != list.end(); current = current->next) {
+//        result.push_back(current->value);
+//    }
+//
+//    std::vector<int> expected = { 1, 2, 3 };
+//    EXPECT_EQ(result, expected);
+//}
 
 TEST(ListTest, pop_front_until_empty) {
     List<int> list;
@@ -292,4 +292,47 @@ TEST(ListTest, double_list) {
 
     EXPECT_DOUBLE_EQ(list.front(), 3.14);
     EXPECT_DOUBLE_EQ(list.back(), 2.71);
+}
+
+TEST(ListTest, iterator_compare) {
+    List<int> list;
+    int expected_val = 1;
+
+    for (int i = 0; i < 10; i++) {
+        list.push_back(i + 1);
+    }
+
+    for (List<int>::iterator it = list.begin(); it != list.end(); it++) {
+        EXPECT_EQ(*it, expected_val);
+        expected_val++;
+    }
+}
+
+TEST(ListTest, iterator_insert) {
+    List<int> list;
+
+    for (int i = 0; i < 10; i++) {
+        list.push_back(0);
+    }
+
+    int set_val = 1;
+    for (List<int>::iterator it = list.begin(); it != list.end(); it++) {
+        *it = set_val;
+        set_val++;
+    }
+
+    int check_val = 1;
+    for (List<int>::iterator it = list.begin(); it != list.end(); it++) {
+        EXPECT_EQ(*it, check_val);
+        check_val++;
+    }
+}
+
+TEST(ListTest, iterator_create) {
+    List<int> list;
+    ASSERT_NO_THROW(
+        for (List<int>::iterator it = list.begin(); it != list.end(); it++) {
+            *it = 0;
+        }
+    );
 }

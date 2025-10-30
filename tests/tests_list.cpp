@@ -205,21 +205,6 @@ TEST(ListTest, assignment_operator) {
     EXPECT_EQ(list2.back(), 2);
 }
 
-//TEST(ListTest, iteration_with_begin_end) {
-//    List<int> list;
-//    list.push_back(1);
-//    list.push_back(2);
-//    list.push_back(3);
-//
-//    std::vector<int> result;
-//    for (Node<int>* current = list.begin(); current != list.end(); current = current->next) {
-//        result.push_back(current->value);
-//    }
-//
-//    std::vector<int> expected = { 1, 2, 3 };
-//    EXPECT_EQ(result, expected);
-//}
-
 TEST(ListTest, pop_front_until_empty) {
     List<int> list;
     list.push_back(1);

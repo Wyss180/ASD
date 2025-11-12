@@ -26,7 +26,7 @@ public:
     void pop_back() noexcept;
     void erase(int pos);
     void erase(Node<T>* node);
-    bool isEmpty();
+    bool isEmpty() const;
     Node<T>* find(const T& val);
 
     T& front();
@@ -262,7 +262,7 @@ void List<T>::erase(Node<T>* node) {
 }
 
 template <class T>
-bool List<T>::isEmpty() {
+bool List<T>::isEmpty() const{
     return _head == nullptr;
 }
 

@@ -14,7 +14,12 @@ include(cmake/function.cmake)         # подхватываем функции,
 								      # и для создания исполняемого проекта в отдельные функции
 
 add_subdirectory(lib_easy_example)
-add_subdirectory(lib_DSU)    # подключаем дополнительный CMakeLists.txt из подкаталога с именем lib_easy_example
+add_subdirectory(lib_queue)
+add_subdirectory(lib_stack) 
+add_subdirectory(lib_algorithms)
+add_subdirectory(lib_list)
+add_subdirectory(lib_doubly_linked_list)
+add_subdirectory(lib_tvector)    # подключаем дополнительный CMakeLists.txt из подкаталога с именем lib_easy_example
 
 add_subdirectory(main)                # подключаем дополнительный CMakeLists.txt из подкаталога с именем main
 

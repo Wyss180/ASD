@@ -33,8 +33,6 @@ public:
     T& back();
     int size() const;
     void clear();
-    //Node<T>* begin();
-    //Node<T>* end();
 
 
 
@@ -309,15 +307,5 @@ void List<T>::clear() {
     _tail = nullptr;
     _count = 0;
 }
-
-//template <class T>
-//Node<T>* List<T>::begin() {
-//    return _head;
-//}
-//
-//template <class T>
-//Node<T>* List<T>::end() {
-//    return nullptr;
-//}
 
 #endif

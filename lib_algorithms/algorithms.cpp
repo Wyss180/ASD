@@ -1,5 +1,6 @@
 #include <stack>
 #include "algorithms.h"
+#include "list.h"
 #include <string>
 
 using std::string;

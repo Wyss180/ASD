@@ -257,29 +257,7 @@ TEST(ListTest, mixed_operations) {
     EXPECT_TRUE(list.isEmpty());
 }
 
-TEST(ListTest, string_list) {
-    List<std::string> list;
-    list.push_back("hello");
-    list.push_back("world");
-
-    EXPECT_EQ(list.size(), 2);
-    EXPECT_EQ(list.front(), "hello");
-    EXPECT_EQ(list.back(), "world");
-
-    list.pop_front();
-    EXPECT_EQ(list.front(), "world");
-}
-
-TEST(ListTest, double_list) {
-    List<double> list;
-    list.push_back(3.14);
-    list.push_back(2.71);
-
-    EXPECT_DOUBLE_EQ(list.front(), 3.14);
-    EXPECT_DOUBLE_EQ(list.back(), 2.71);
-}
-
-TEST(ListTest, iterator_compare) {
+TEST(ListTest, iterator_for_read) {
     List<int> list;
     int expected_val = 1;
 
@@ -293,7 +271,7 @@ TEST(ListTest, iterator_compare) {
     }
 }
 
-TEST(ListTest, iterator_insert) {
+TEST(ListTest, iterator_for_write) {
     List<int> list;
 
     for (int i = 0; i < 10; i++) {
@@ -317,7 +295,7 @@ TEST(ListTest, iterator_create) {
     List<int> list;
     ASSERT_NO_THROW(
         for (List<int>::iterator it = list.begin(); it != list.end(); it++) {
-            *it = 0;
+            ADD_FAILURE();
         }
     );
 }

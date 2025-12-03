@@ -56,3 +56,18 @@ TEST(QueueTest, circular_behavior) {
     q.pop();
     EXPECT_EQ(q.front(), 4);
 }
+
+TEST(QueueIntTest, CanAddAfterClear) {
+    Queue<int> q(3);
+
+    q.push(1);
+    q.push(2);
+    q.push(3);
+
+    q.clear();
+    EXPECT_TRUE(q.isEmpty());
+
+    q.push(100);
+    q.push(200);
+    EXPECT_FALSE(q.isEmpty());
+}

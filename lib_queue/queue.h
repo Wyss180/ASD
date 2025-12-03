@@ -24,7 +24,7 @@ public:
             throw std::logic_error("Queue is empty");
         }
         _count--;
-        _head = (++_head) % _size;
+        _head = (_head+1) % _size;
     }
 
     void push(const T& value) {
@@ -45,6 +45,11 @@ public:
 
     bool isEmpty() const {
         return _count == 0;
+    }
+
+    void clear() {
+        _head = 0;
+        _count = 0;
     }
 };
 

@@ -4,7 +4,7 @@
 
 #define STEP_OF_CAPACITY 15
 
-int calc_capacity(int size) {
+inline int calc_capacity(int size) {
 	return (size + STEP_OF_CAPACITY) / STEP_OF_CAPACITY * STEP_OF_CAPACITY;
 }
 

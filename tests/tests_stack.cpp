@@ -72,20 +72,3 @@ TEST(StackTest, clear_stack) {
     s.clear();
     EXPECT_TRUE(s.isEmpty());
 }
-
-TEST(StackTest, check_size) {
-    Stack<int> s(5);
-    EXPECT_EQ(s.size(), 0);
-
-    s.push(1);
-    EXPECT_EQ(s.size(), 1);
-
-    s.push(2);
-    EXPECT_EQ(s.size(), 2);
-
-    s.pop();
-    EXPECT_EQ(s.size(), 1);
-
-    s.clear();
-    EXPECT_EQ(s.size(), 0);
-}

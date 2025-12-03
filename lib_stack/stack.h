@@ -57,10 +57,6 @@ public:
     void clear() {
         _top = -1;
     }
-
-    int size() const {
-        return _top + 1;
-    }
 };
 
 #endif

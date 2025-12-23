@@ -4,6 +4,7 @@
 #include <string>
 #include "../lib_DSU/DSU.h"
 #include "../lib_TVector/Tvector.h"
+#include "../lib_list/list.h"
 
 using std::string;
 
@@ -38,47 +39,34 @@ bool check_breckets(std::string str) {
     return stack.empty();
 }
 
-int count_islands(std::vector<std::vector<int>>& field) {
-    if (field.empty() || field[0].empty()) {
-        return 0;
-    }
+int count_islands(std::vector<std::vector<int>>& matrix) {
+    if (matrix.empty() || matrix[0].empty()) return 0;
 
-    int rows = field.size();
-    int cols = field[0].size();
-
+    int rows = matrix.size(), cols = matrix[0].size();
     DSU dsu(rows * cols);
-
-    int islandCount = 0;
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            if (field[i][j] == 1) {
-                islandCount++;
-            }
-        }
-    }
+    int islands = 0;
 
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if (field[i][j] == 1) {
-                int current_id = i * cols + j;
+            if (matrix[i][j] == 1) {
+                islands++;
+                int pos = i * cols + j;
 
-                if (j + 1 < cols && field[i][j + 1] == 1) {
-                    int right_id = i * cols + (j + 1);
-                    if (dsu.find(current_id) != dsu.find(right_id)) {
-                        dsu.unionSets(current_id, right_id);
-                        islandCount--;
+                if (j > 0 && matrix[i][j - 1] == 1) {
+                    if (dsu.find(pos) != dsu.find(pos - 1)) {
+                        dsu.unionSets(pos, pos - 1);
+                        islands--;
                     }
                 }
-                if (i + 1 < rows && field[i + 1][j] == 1) {
-                    int down_id = (i + 1) * cols + j;
-                    if (dsu.find(current_id) != dsu.find(down_id)) {
-                        dsu.unionSets(current_id, down_id);
-                        islandCount--;
+                if (i > 0 && matrix[i - 1][j] == 1) {
+                    if (dsu.find(pos) != dsu.find(pos - cols)) {
+                        dsu.unionSets(pos, pos - cols);
+                        islands--;
                     }
                 }
             }
         }
     }
 
-    return islandCount;
+    return islands;
 }

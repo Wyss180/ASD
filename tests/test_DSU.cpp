@@ -9,25 +9,6 @@ TEST(DSUTest, Find) {
     }
 }
 
-TEST(DSUTest, FindMultipleCalls) {
-    DSU dsu(3);
-
-    EXPECT_EQ(dsu.find(0), 0);
-    EXPECT_EQ(dsu.find(0), 0);
-    EXPECT_EQ(dsu.find(1), 1);
-    EXPECT_EQ(dsu.find(2), 2);
-    EXPECT_EQ(dsu.find(1), 1);
-}
-
-TEST(DSUTest, SelfUnionDoesNothing) {
-    DSU dsu(3);
-    dsu.unionSets(1, 1);
-
-    EXPECT_EQ(dsu.find(0), 0);
-    EXPECT_EQ(dsu.find(1), 1);
-    EXPECT_EQ(dsu.find(2), 2);
-}
-
 TEST(DSUTest, RankDependsOnUnionOrder) {
     DSU dsu1(4);
     DSU dsu2(4);
@@ -43,4 +24,24 @@ TEST(DSUTest, RankDependsOnUnionOrder) {
     EXPECT_NE(dsu1.rank(0), dsu2.rank(0));
 
     EXPECT_GT(dsu1.rank(0), dsu2.rank(0));
+}
+
+TEST(DSUTest, FindAndUnion) {
+    DSU dsu(12);
+
+    for (int cluster = 0; cluster < 3; cluster++) {
+        int base = cluster * 4;
+        dsu.unionSets(base, base + 1);
+        dsu.unionSets(base + 2, base + 3);
+        dsu.unionSets(base, base + 2);
+
+        EXPECT_EQ(dsu.rank(dsu.find(base)), 2);
+    }
+
+    dsu.unionSets(0, 4);
+    EXPECT_EQ(dsu.rank(dsu.find(0)), 3);
+
+    dsu.unionSets(0, 8);
+    int finalRoot = dsu.find(0);
+    for (int i = 0; i < 12; i++) EXPECT_EQ(dsu.find(i), finalRoot);
 }

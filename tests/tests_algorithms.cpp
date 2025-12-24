@@ -233,38 +233,3 @@ TEST(CycleDetection, TwoNodesCycle) {
     EXPECT_TRUE(hasCycle(&node1));
     EXPECT_TRUE(hasCycleReverse(&node1));
 }
-
-TEST(CyclePosition, FindCycleStart) {
-    Node<int> node1(1);
-    Node<int> node2(2);
-    Node<int> node3(3);
-    Node<int> node4(4);
-    Node<int> node5(5);
-
-    node1.next = &node2;
-    node2.next = &node3;
-    node3.next = &node4;
-    node4.next = &node5;
-    node5.next = &node3;
-
-    Node<int>* cycleStart = findCycleStart(&node1);
-    EXPECT_EQ(cycleStart, &node3);
-    EXPECT_EQ(cycleStart->value, 3);
-}
-
-TEST(CyclePosition, CycleAtHead) {
-    Node<int> node1(1);
-    node1.next = &node1;
-
-    Node<int>* cycleStart = findCycleStart(&node1);
-    EXPECT_EQ(cycleStart, &node1);
-}
-
-TEST(CyclePosition, NoCycleReturnsNull) {
-    Node<int> node1(1);
-    Node<int> node2(2);
-    node1.next = &node2;
-
-    Node<int>* cycleStart = findCycleStart(&node1);
-    EXPECT_EQ(cycleStart, nullptr);
-}

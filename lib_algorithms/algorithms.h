@@ -79,9 +79,8 @@ bool hasCycleReverse(Node<T>* head) {
 }
 
 template<class T>
-Node<T>* findCycleStart(Node<T>* head) {
-    if (!head || !head->next) return nullptr;
-
+Node<T>* findBreakPointWithMath(Node<T>* head) {
+    if (!head) return nullptr;
     Node<T>* slow = head;
     Node<T>* fast = head;
 
@@ -89,19 +88,34 @@ Node<T>* findCycleStart(Node<T>* head) {
         slow = slow->next;
         fast = fast->next->next;
 
-        if (slow == fast) {
-            break;
-        }
+        if (slow == fast) break;
     }
 
     if (!fast || !fast->next) return nullptr;
 
-    slow = head;
-    while (slow != fast) {
-        slow = slow->next;
+    Node<T>* start1 = head;
+    while (start1 != fast) {
+        start1 = start1->next;
         fast = fast->next;
     }
 
-    return slow;
+    int cycleLength = 1;
+    Node<T>* temp = start1->next;
+    while (temp != start1) {
+        cycleLength++;
+        temp = temp->next;
+    }
+
+    Node<T>* current = head;
+    for (int i = 0; i < cycleLength - 1; i++) {
+        if (!current) break;
+        current = current->next;
+    }
+    while (current->next != start1) {
+        current = current->next;
+        start1 = start1->next;
+    }
+
+    return current;
 }
 #endif

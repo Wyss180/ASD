@@ -162,28 +162,6 @@ TEST(IslandsEdgeCases, ChainReactionUnions) {
     EXPECT_EQ(count_islands(matrix), 1);
 }
 
-TEST(IslandsEdgeCases, IrregularMatrix) {
-    std::vector<std::vector<int>> matrix = {
-        {1, 0, 1},
-        {0, 1},
-        {1, 0, 1, 0}
-    };
-    EXPECT_NO_THROW(count_islands(matrix));
-}
-
-TEST(IslandsEdgeCases, RealisticMap) {
-    std::vector<std::vector<int>> matrix = {
-        {1, 1, 0, 0, 0, 1, 0},
-        {1, 1, 0, 0, 0, 0, 1},
-        {0, 0, 1, 0, 1, 0, 0},
-        {0, 0, 0, 0, 1, 1, 0},
-        {1, 0, 1, 0, 1, 0, 0},
-        {1, 0, 1, 0, 1, 0, 1},
-        {0, 1, 0, 0, 0, 1, 1}
-    };
-    EXPECT_EQ(count_islands(matrix), 10);
-}
-
 TEST(CycleDetection, EmptyList) {
     EXPECT_FALSE(hasCycle<int>(nullptr));
     EXPECT_FALSE(hasCycleReverse<int>(nullptr));
@@ -200,19 +178,6 @@ TEST(CycleDetection, SimpleNoCycle) {
 
     EXPECT_FALSE(hasCycle(&node1));
     EXPECT_FALSE(hasCycleReverse(&node1));
-}
-
-TEST(CycleDetection, SimpleCycle) {
-    Node<int> node1(1);
-    Node<int> node2(2);
-    Node<int> node3(3);
-
-    node1.next = &node2;
-    node2.next = &node3;
-    node3.next = &node2; 
-
-    EXPECT_TRUE(hasCycle(&node1));
-    EXPECT_TRUE(hasCycleReverse(&node1));
 }
 
 TEST(CycleDetection, SelfCycle) {

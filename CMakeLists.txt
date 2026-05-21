@@ -10,22 +10,29 @@ project(Algorithms-and-Data-Structures)
 # затем следует список инструкций для подключения проектов из подкаталогов
 
 include(cmake/function.cmake)         # подхватываем функции, реализованные в файле function.cmake
-                                      # для простоты мы объединили наборы команд для создания статической библиотеки
-								      # и для создания исполняемого проекта в отдельные функции
+                         
+
+
+             # для простоты мы объединили наборы команд для создания статической библиотеки
+
 
 add_subdirectory(lib_easy_example)
-add_subdirectory(lib_DSU)    # подключаем дополнительный CMakeLists.txt из подкаталога с именем lib_easy_example
+add_subdirectory(lib_DSU)
 add_subdirectory(lib_queue)
 add_subdirectory(lib_stack) 
 add_subdirectory(lib_algorithms)
 add_subdirectory(lib_list)
 add_subdirectory(lib_Tstack)
-add_subdirectory(lib_Tqueue)    # подключаем дополнительный CMakeLists.txt из подкаталога с именем lib_easy_example
+add_subdirectory(lib_Tqueue)
 add_subdirectory(lib_doubly_linked_list)
-add_subdirectory(lib_tvector)    # подключаем дополнительный CMakeLists.txt из подкаталога с именем lib_easy_example
+add_subdirectory(lib_tvector)
+add_subdirectory(lib_extra)
 add_subdirectory(lib_ITable)
-add_subdirectory(lib_UnsortedTableOnVec)
-add_subdirectory(main)                # подключаем дополнительный CMakeLists.txt из подкаталога с именем main
+add_subdirectory(lib_tree)
+add_subdirectory(lib_polynom)
+add_subdirectory(lib_monom)
+add_subdirectory(main)
+
 
 option(BTEST "build test?" ON)        # указываем подключаем ли google-тесты (ON или YES) или нет (OFF или NO)
 

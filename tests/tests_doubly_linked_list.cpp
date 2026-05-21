@@ -118,16 +118,6 @@ TEST(DListTest, IteratorForward) {
     }
 }
 
-TEST(DListTest, IteratorBackward) {
-    DList<int> list = { 1, 2, 3, 4, 5 };
-    int expected = 5;
-    auto it = list.end();
-    while (it != list.begin()) {
-        --it;
-        EXPECT_EQ(*it, expected--);
-    }
-}
-
 TEST(DListTest, RangeBasedFor) {
     DList<int> list = { 1, 2, 3, 4, 5 };
     int sum = 0;

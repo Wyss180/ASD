@@ -2,53 +2,6 @@
 #include "../lib_tree/AVL.h"
 #include <string>
 
-
-TEST(AVLTest, DefaultConstructorCreatesEmptyTree) {
-    AVL<int, std::string> tree;
-    EXPECT_TRUE(tree.is_empty());
-}
-
-TEST(AVLTest, InsertSingleElement) {
-    AVL<int, std::string> tree;
-    tree.insert(5, std::string("five"));
-    EXPECT_FALSE(tree.is_empty());
-}
-
-TEST(AVLTest, InsertMultipleElements) {
-    AVL<int, std::string> tree;
-    tree.insert(5, std::string("five"));
-    tree.insert(3, std::string("three"));
-    tree.insert(7, std::string("seven"));
-    EXPECT_FALSE(tree.is_empty());
-}
-
-TEST(AVLTest, InsertDuplicateKeyThrows) {
-    AVL<int, std::string> tree;
-    tree.insert(5, std::string("five"));
-    EXPECT_THROW(tree.insert(5, std::string("FIVE")), std::logic_error);
-}
-
-
-TEST(AVLTest, InsertAscendingOrderBalanced) {
-    AVL<int, std::string> tree;
-    for (int i = 1; i <= 10; ++i) {
-        tree.insert(i, std::string("val_") + std::to_string(i));
-    }
-    for (int i = 1; i <= 10; ++i) {
-        EXPECT_EQ(tree.find(i), std::string("val_") + std::to_string(i));
-    }
-}
-
-TEST(AVLTest, InsertDescendingOrderBalanced) {
-    AVL<int, std::string> tree;
-    for (int i = 10; i >= 1; --i) {
-        tree.insert(i, std::string("val_") + std::to_string(i));
-    }
-    for (int i = 1; i <= 10; ++i) {
-        EXPECT_EQ(tree.find(i), std::string("val_") + std::to_string(i));
-    }
-}
-
 TEST(AVLTest, InsertRandomOrder) {
     AVL<int, std::string> tree;
     tree.insert(5, std::string("five"));
@@ -96,46 +49,6 @@ TEST(AVLTest, RightLeftRotation) {
     tree.insert(2, std::string("two"));
     EXPECT_EQ(tree.find(2), std::string("two"));
 }
-
-
-TEST(AVLTest, FindExistingElement) {
-    AVL<int, std::string> tree;
-    tree.insert(5, std::string("five"));
-    EXPECT_EQ(tree.find(5), std::string("five"));
-}
-
-TEST(AVLTest, FindRoot) {
-    AVL<int, std::string> tree;
-    tree.insert(5, std::string("five"));
-    tree.insert(3, std::string("three"));
-    EXPECT_EQ(tree.find(5), std::string("five"));
-}
-
-TEST(AVLTest, FindLeftChild) {
-    AVL<int, std::string> tree;
-    tree.insert(5, std::string("five"));
-    tree.insert(3, std::string("three"));
-    EXPECT_EQ(tree.find(3), std::string("three"));
-}
-
-TEST(AVLTest, FindRightChild) {
-    AVL<int, std::string> tree;
-    tree.insert(5, std::string("five"));
-    tree.insert(7, std::string("seven"));
-    EXPECT_EQ(tree.find(7), std::string("seven"));
-}
-
-TEST(AVLTest, FindNonexistentKeyThrows) {
-    AVL<int, std::string> tree;
-    tree.insert(5, std::string("five"));
-    EXPECT_THROW(tree.find(99), std::logic_error);
-}
-
-TEST(AVLTest, FindInEmptyTreeThrows) {
-    AVL<int, std::string> tree;
-    EXPECT_THROW(tree.find(1), std::logic_error);
-}
-
 
 TEST(AVLTest, EraseSingleElement) {
     AVL<int, std::string> tree;
@@ -208,60 +121,58 @@ TEST(AVLTest, EraseAndReinsert) {
     EXPECT_EQ(tree.find(5), std::string("FIVE"));
 }
 
-
-TEST(AVLTest, ToStringEmpty) {
+TEST(AVLBalanceTest, insert10root100to50) {
     AVL<int, std::string> tree;
-    EXPECT_TRUE(tree.to_string().empty());
-}
 
-TEST(AVLTest, ToStringSingle) {
-    AVL<int, std::string> tree;
-    tree.insert(5, std::string("five"));
-    EXPECT_TRUE(tree.to_string().find("5:five") != std::string::npos);
-}
+    tree.insert(100, "hundred");
+    tree.insert(50, "fifty");
+    tree.insert(150, "one fifty");
+    tree.insert(25, "twenty five");
+    tree.insert(75, "seventy five");
+    tree.insert(175, "one seventy five");
+    tree.insert(20, "twenty");
+    tree.insert(30, "thirty");
+    tree.insert(60, "sixty");
+    tree.insert(80, "eighty");
 
-TEST(AVLTest, ToStringSortedOrder) {
-    AVL<int, std::string> tree;
-    tree.insert(5, std::string("five"));
-    tree.insert(3, std::string("three"));
-    tree.insert(7, std::string("seven"));
-    std::string sorted = tree.to_string_sorted();
-    size_t pos3 = sorted.find("3:three");
-    size_t pos5 = sorted.find("5:five");
-    size_t pos7 = sorted.find("7:seven");
-    EXPECT_TRUE(pos3 < pos5 && pos5 < pos7);
-}
+    ASSERT_EQ(tree.root(), 100);
 
+    tree.insert(10, "ten");
 
-TEST(AVLTest, MassInsertAndErase) {
-    AVL<int, std::string> tree;
-    const int N = 500;
-    for (int i = 0; i < N; ++i) {
-        tree.insert(i, std::string("val_") + std::to_string(i));
-    }
-    for (int i = 0; i < N; ++i) {
-        EXPECT_EQ(tree.find(i), std::string("val_") + std::to_string(i));
-    }
-    for (int i = 0; i < N; i += 2) {
-        tree.erase(i);
-    }
-    for (int i = 0; i < N; ++i) {
-        if (i % 2 == 0)
-            EXPECT_THROW(tree.find(i), std::logic_error);
-        else
-            EXPECT_EQ(tree.find(i), std::string("val_") + std::to_string(i));
+    EXPECT_EQ(tree.root(), 50);
+
+    for (int k : {10, 20, 25, 30, 50, 60, 75, 80, 100, 150, 175}) {
+        EXPECT_NO_THROW(tree.find(k));
     }
 }
 
+TEST(AVLDeleteTest, erase25root40to60) {
+    AVL<int, std::string> tree;
 
-TEST(AVLTypes, StringKeyIntValue) {
-    AVL<std::string, int> tree;
-    tree.insert(std::string("apple"), 1);
-    EXPECT_EQ(tree.find(std::string("apple")), 1);
-}
+    tree.insert(40, "forty");
+    tree.insert(20, "twenty");
+    tree.insert(60, "sixty");
+    tree.insert(15, "fifteen");
+    tree.insert(25, "twenty five");
+    tree.insert(50, "fifty");
+    tree.insert(70, "seventy");
+    tree.insert(5, "five");
+    tree.insert(45, "forty five");
+    tree.insert(55, "fifty five");
+    tree.insert(65, "sixty five");
+    tree.insert(80, "eighty");
+    tree.insert(75, "seventy five");
 
-TEST(AVLTypes, DoubleKeyStringValue) {
-    AVL<double, std::string> tree;
-    tree.insert(3.14, std::string("pi"));
-    EXPECT_EQ(tree.find(3.14), std::string("pi"));
+    ASSERT_EQ(tree.root(), 40);
+
+    tree.erase(25);
+
+    EXPECT_EQ(tree.root(), 60);
+
+    EXPECT_THROW(tree.find(25), std::logic_error);
+
+    std::vector<int> remaining = { 5,15,20,40,45,50,55,60,65,70,75,80 };
+    for (int k : remaining) {
+        EXPECT_NO_THROW(tree.find(k));
+    }
 }

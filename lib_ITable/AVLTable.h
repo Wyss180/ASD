@@ -41,4 +41,8 @@ public:
         _tree.print_sorted(out);
         return out;
     }
+
+    Tkey root() const {
+        return _tree.root(); 
+    }
 };

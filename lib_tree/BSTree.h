@@ -113,4 +113,9 @@ public:
         inOrder(_root, oss);
         return oss.str();
     }
+
+    TKey root() const {
+        if (!_root) throw std::logic_error("Tree is empty");
+        return _root->data.first;
+    }
 };

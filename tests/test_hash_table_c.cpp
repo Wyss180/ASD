@@ -14,9 +14,9 @@ TEST(HashTableCTest, InsertAndFind) {
 
 TEST(HashTableCTest, OverwriteKey) {
     HashTableC<int> table;
-    table.insert("x", 10);
-    table.insert("x", 20);
-    EXPECT_EQ(table.find("x"), 20);
+    table.insert("cat", 10);
+    table.insert("act", 20);
+    EXPECT_EQ(table.find("act"), 20);
 }
 
 TEST(HashTableCTest, Erase) {

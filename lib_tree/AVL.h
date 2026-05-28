@@ -59,8 +59,10 @@ private:
 
     Node* balance(Node* node) {
         if (!node) return nullptr;
-
+        
+        //int h1 = node->height;
         updateHeight(node);
+
         int bf = balanceFactor(node);
 
         if (bf > 1) {
@@ -73,6 +75,12 @@ private:
                 node->right = rotateRight(node->right);
             return rotateLeft(node);
         }
+
+        /*updateHeight(node);
+        if (h1 == node->height) {
+            return node;
+        }*/
+
         return node;
     }
 

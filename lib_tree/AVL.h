@@ -60,7 +60,6 @@ private:
     Node* balance(Node* node) {
         if (!node) return nullptr;
         
-        //int h1 = node->height;
         updateHeight(node);
 
         int bf = balanceFactor(node);
@@ -75,11 +74,6 @@ private:
                 node->right = rotateRight(node->right);
             return rotateLeft(node);
         }
-
-        /*updateHeight(node);
-        if (h1 == node->height) {
-            return node;
-        }*/
 
         return node;
     }
@@ -97,30 +91,6 @@ private:
 
         return balance(node);
     }
-
-    /*Node* insert(Node* node, const Tkey& key, const Tvalue& val, bool& heightChanged) {
-        if (!node) {
-            heightChanged = true;
-            return new Node(key, val);
-        }
-        if (key < node->data.first) {
-            node->left = insert(node->left, key, val, heightChanged);
-        }
-        else if (key > node->data.first) {
-            node->right = insert(node->right, key, val, heightChanged);
-        }
-        else {
-            throw std::logic_error("Key already exists");
-        }
-
-        if (!heightChanged) return node;
-
-        int oldHeight = node->height;
-        node = balance(node);
-        if (node->height == oldHeight)
-            heightChanged = false;
-        return node;
-    }*/
 
     Node* findMin(Node* node) const {
         while (node && node->left)

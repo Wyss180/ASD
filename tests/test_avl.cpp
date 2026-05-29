@@ -2,54 +2,6 @@
 #include "../lib_tree/AVL.h"
 #include <string>
 
-TEST(AVLTest, InsertRandomOrder) {
-    AVL<int, std::string> tree;
-    tree.insert(5, std::string("five"));
-    tree.insert(3, std::string("three"));
-    tree.insert(7, std::string("seven"));
-    tree.insert(2, std::string("two"));
-    tree.insert(4, std::string("four"));
-    tree.insert(6, std::string("six"));
-    tree.insert(8, std::string("eight"));
-    EXPECT_EQ(tree.find(4), std::string("four"));
-    EXPECT_EQ(tree.find(6), std::string("six"));
-}
-
-
-TEST(AVLTest, LeftLeftRotation) {
-    AVL<int, std::string> tree;
-    tree.insert(3, std::string("three"));
-    tree.insert(2, std::string("two"));
-    tree.insert(1, std::string("one"));
-    EXPECT_EQ(tree.find(2), std::string("two"));
-    EXPECT_EQ(tree.find(1), std::string("one"));
-    EXPECT_EQ(tree.find(3), std::string("three"));
-}
-
-TEST(AVLTest, RightRightRotation) {
-    AVL<int, std::string> tree;
-    tree.insert(1, std::string("one"));
-    tree.insert(2, std::string("two"));
-    tree.insert(3, std::string("three"));
-    EXPECT_EQ(tree.find(2), std::string("two"));
-}
-
-TEST(AVLTest, LeftRightRotation) {
-    AVL<int, std::string> tree;
-    tree.insert(3, std::string("three"));
-    tree.insert(1, std::string("one"));
-    tree.insert(2, std::string("two"));
-    EXPECT_EQ(tree.find(2), std::string("two"));
-}
-
-TEST(AVLTest, RightLeftRotation) {
-    AVL<int, std::string> tree;
-    tree.insert(1, std::string("one"));
-    tree.insert(3, std::string("three"));
-    tree.insert(2, std::string("two"));
-    EXPECT_EQ(tree.find(2), std::string("two"));
-}
-
 TEST(AVLTest, EraseSingleElement) {
     AVL<int, std::string> tree;
     tree.insert(5, std::string("five"));
@@ -175,4 +127,52 @@ TEST(AVLDeleteTest, erase25root40to60) {
     for (int k : remaining) {
         EXPECT_NO_THROW(tree.find(k));
     }
+}
+
+TEST(AVLtest, insertBalanceRR) {
+    AVL<int, int> tree;
+
+    tree.insert(100, 100);
+    tree.insert(50, 50);
+    tree.insert(25, 25);
+
+    EXPECT_EQ(tree.root(), 50);
+}
+
+TEST(AVLtest, insertBalanceLL) {
+    AVL<int, int> tree;
+
+    tree.insert(100, 100);
+    tree.insert(150, 150);
+    tree.insert(175, 175);
+
+    EXPECT_EQ(tree.root(), 150);
+}
+
+TEST(AVLtest, insertBalanceLR) {
+    AVL<int, int> tree;
+
+    tree.insert(100, 100);
+    tree.insert(50, 50);
+    tree.insert(75, 75);
+
+    EXPECT_EQ(tree.root(), 75);
+}
+
+TEST(AVLtest, insertBalanceRL) {
+    AVL<int, int> tree;
+    tree.insert(100, 100);
+    tree.insert(150, 150);
+    tree.insert(125, 125);
+
+    EXPECT_EQ(tree.root(), 125);
+
+}
+
+TEST(AVLtest, eraseSingle) {
+    AVL<int, int> tree;
+
+    tree.insert(1,1);
+    tree.erase(1);
+    EXPECT_TRUE(tree.is_empty());
 }
